@@ -13,12 +13,12 @@ $api->version('v1', function ($api) {
 
 	// example of protected route
 	$api->get('protected', ['middleware' => ['api.auth'], function () {		
-		return \App\User::all();
+		return "It's protected and working!";
     }]);
 
 	// example of free route
 	$api->get('free', function() {
-		return ProductFamily::with(['commonTranslateWordId', 'commonProductLines.commonProductGroupValues.commonProductGroup'])->get();
+		return "It's free and working!";
 	});
 
 });
