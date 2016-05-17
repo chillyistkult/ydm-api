@@ -127,6 +127,7 @@ storage/
 .env.*.php
 .env.php
 .env
+.vagrant
 
 # Rocketeer PHP task runner and deployment package. https://github.com/rocketeers/rocketeer
 .rocketeer/
