@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if ($this->app->environment() == 'local') {
+            $this->app->register('Way\Generators\GeneratorsServiceProvider');
+            $this->app->register('Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider');
+            $this->app->register('User11001\EloquentModelGenerator\EloquentModelGeneratorProvider');
+        }
     }
 }
