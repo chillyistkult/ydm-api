@@ -22,12 +22,6 @@
         "symfony/dom-crawler": "2.8.*|3.0.*",
         "xethron/migrations-generator": "dev-l5"
     },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:jamisonvalenta/Laravel-4-Generators.git"
-        }
-    ],
     "autoload": {
         "classmap": [
             "database"
