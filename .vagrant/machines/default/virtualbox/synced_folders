@@ -1,0 +1,1 @@
+{"virtualbox":{"/home/vagrant/ydm-api":{"type":null,"mount_options":[],"guestpath":"/home/vagrant/ydm-api","hostpath":"/Users/benjaminschuch/devbox/www/ydm-api","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/Users/benjaminschuch/devbox/www/ydm-api","disabled":false,"__vagrantfile":true}}}
