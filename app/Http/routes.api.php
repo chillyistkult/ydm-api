@@ -21,4 +21,8 @@ $api->version('v1', function ($api) {
 		return "It's free and working!";
 	});
 
+	$api->get('products', function() {
+		return ProductFamily::with(['commonProductGroupValues.commonProductGroup', 'commonProductGroupValues.commonProductLine', 'commonProductGroupValues.commonProductLineGroup'])->get();;
+	});
+
 });
