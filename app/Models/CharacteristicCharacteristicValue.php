@@ -16,9 +16,11 @@ class CharacteristicCharacteristicValue extends Model {
         return $this->belongsTo(\App\Models\CharacteristicTranslateWordId::class, 'displayName', 'wordID');
     }
 
+    /*
     public function characteristicTranslateWordId() {
         return $this->belongsTo(\App\Models\CharacteristicTranslateWordId::class, 'modifiedDisplayName', 'wordID');
     }
+    */
 
     public function characteristicCustomCharacteristicValues() {
         return $this->belongsToMany(\App\Models\CharacteristicCustomCharacteristicValue::class, 'Characteristic_CustomCharacteristicValueCharacteristicValueRel', 'characteristicValueID', 'customCharacteristicValueID');

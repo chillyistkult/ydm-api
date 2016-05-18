@@ -24,9 +24,11 @@ class CommonProductLine extends Model {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'displayName', 'wordID');
     }
 
+    /*
     public function commonTranslateWordId() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'selectionResultPrefix', 'wordID');
     }
+    */
 
     public function filterProperties() {
         return $this->belongsToMany(\App\Models\FilterProperty::class, 'Filter_ProductLineProperties', 'productLineID', 'productPropertyID');

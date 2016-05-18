@@ -20,9 +20,11 @@ class CommonTranslateWordId extends Model {
         return $this->hasMany(\App\Models\CharacteristicCharacteristicGroup::class, 'helpTooltipDisplayName', 'wordID');
     }
 
+    /*
     public function characteristicCharacteristicGroups() {
         return $this->hasMany(\App\Models\CharacteristicCharacteristicGroup::class, 'infoTooltipDisplayName', 'wordID');
     }
+    */
 
     public function characteristicCharacteristicRemarks() {
         return $this->hasMany(\App\Models\CharacteristicCharacteristicRemark::class, 'remark', 'wordID');
@@ -36,9 +38,11 @@ class CommonTranslateWordId extends Model {
         return $this->hasMany(\App\Models\CommonProductLine::class, 'displayName', 'wordID');
     }
 
+    /*
     public function commonProductLines() {
         return $this->hasMany(\App\Models\CommonProductLine::class, 'selectionResultPrefix', 'wordID');
     }
+    */
 
     public function commonProductLineGroups() {
         return $this->hasMany(\App\Models\CommonProductLineGroup::class, 'displayName', 'wordID');
@@ -56,6 +60,7 @@ class CommonTranslateWordId extends Model {
         return $this->hasMany(\App\Models\FilterFilterGroup::class, 'displayName', 'wordID');
     }
 
+    /*
     public function filterFilterGroups() {
         return $this->hasMany(\App\Models\FilterFilterGroup::class, 'helpTooltip', 'wordID');
     }
@@ -63,6 +68,7 @@ class CommonTranslateWordId extends Model {
     public function filterFilterGroups() {
         return $this->hasMany(\App\Models\FilterFilterGroup::class, 'infoTooltip', 'wordID');
     }
+    */
 
     public function filterProperties() {
         return $this->hasMany(\App\Models\FilterProperty::class, 'displayName', 'wordID');

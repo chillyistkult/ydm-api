@@ -20,9 +20,11 @@ class CharacteristicCharacteristicGroup extends Model {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'helpTooltipDisplayName', 'wordID');
     }
 
+    /*
     public function commonTranslateWordId() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'infoTooltipDisplayName', 'wordID');
     }
+    */
 
     public function characteristicModelCharacteristics() {
         return $this->hasMany(\App\Models\CharacteristicModelCharacteristic::class, 'characteristicGroupID', 'characteristicGroupID');

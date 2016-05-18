@@ -16,9 +16,11 @@ class CharacteristicCharacteristic extends Model {
         return $this->belongsTo(\App\Models\CharacteristicTranslateWordId::class, 'displayName', 'wordID');
     }
 
+    /*
     public function characteristicTranslateWordId() {
         return $this->belongsTo(\App\Models\CharacteristicTranslateWordId::class, 'modifiedDisplayName', 'wordID');
     }
+    */
 
     public function filterCharacteristicFilters() {
         return $this->belongsToMany(\App\Models\FilterCharacteristicFilter::class, 'Filter_CharacteristcFilterCharacteristicRelation', 'characteristicID', 'filterID');

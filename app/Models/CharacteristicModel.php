@@ -24,9 +24,11 @@ class CharacteristicModel extends Model {
         return $this->belongsToMany(\App\Models\CharacteristicModel::class, 'Characteristic_ModelDependency', 'baseCharacteristicModelID', 'requiredCharacteristicModelID');
     }
 
+    /*
     public function characteristicModels() {
         return $this->belongsToMany(\App\Models\CharacteristicModel::class, 'Characteristic_ModelDependency', 'requiredCharacteristicModelID', 'baseCharacteristicModelID');
     }
+    */
 
     public function characteristicModelComponentValues() {
         return $this->belongsToMany(\App\Models\CharacteristicModelComponentValue::class, 'Characteristic_ModelModelComponentValueRelation', 'characteristicModelID', 'modelComponentValueID');
@@ -52,9 +54,11 @@ class CharacteristicModel extends Model {
         return $this->hasMany(\App\Models\CharacteristicModelDependency::class, 'baseCharacteristicModelID', 'characteristicModelID');
     }
 
+    /*
     public function characteristicModelDependencies() {
         return $this->hasMany(\App\Models\CharacteristicModelDependency::class, 'requiredCharacteristicModelID', 'characteristicModelID');
     }
+    */
 
     public function characteristicModelModelComponentValueRelations() {
         return $this->hasMany(\App\Models\CharacteristicModelModelComponentValueRelation::class, 'characteristicModelID', 'characteristicModelID');

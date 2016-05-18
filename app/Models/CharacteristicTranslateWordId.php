@@ -16,9 +16,11 @@ class CharacteristicTranslateWordId extends Model {
         return $this->hasMany(\App\Models\CharacteristicCharacteristic::class, 'displayName', 'wordID');
     }
 
+    /*
     public function characteristicCharacteristics() {
         return $this->hasMany(\App\Models\CharacteristicCharacteristic::class, 'modifiedDisplayName', 'wordID');
     }
+    */
 
     public function characteristicCharacteristicGroups() {
         return $this->hasMany(\App\Models\CharacteristicCharacteristicGroup::class, 'displayName', 'wordID');
@@ -28,9 +30,11 @@ class CharacteristicTranslateWordId extends Model {
         return $this->hasMany(\App\Models\CharacteristicCharacteristicValue::class, 'displayName', 'wordID');
     }
 
+    /*
     public function characteristicCharacteristicValues() {
         return $this->hasMany(\App\Models\CharacteristicCharacteristicValue::class, 'modifiedDisplayName', 'wordID');
     }
+    */
 
     public function characteristicCustomCharacteristics() {
         return $this->hasMany(\App\Models\CharacteristicCustomCharacteristic::class, 'displayName', 'wordID');
