@@ -11,6 +11,15 @@ class UserSystemUser extends Model {
     protected $table = 'User_SystemUser';
     protected $fillable = ['systemUserID', 'username', 'password', 'active'];
 
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
 
 
 }
