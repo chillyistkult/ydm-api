@@ -11,23 +11,23 @@ $api->version('v1', function ($api) {
 	$api->post('auth/recovery', 'App\Api\V1\Controllers\AuthController@recovery');
 	$api->post('auth/reset', 'App\Api\V1\Controllers\AuthController@reset');
 
-	// example of protected route
-	$api->get('protected', ['middleware' => ['api.auth'], function () {		
-		return "It's protected and working!";
-    }]);
+	$api->group(['middleware' => ['api.auth']], function ($api) {
+		$api->get('protected', function () {
+			return "It's protected and working!";
+		});
+		$api->get('technologies', function() {
+			return ProductFamily::with(['commonTranslateWordId'])->get()->all();
+			//return ProductFamily::with(['commonProductGroupValues.commonProductGroup', 'commonProductGroupValues.commonProductLine', 'commonProductGroupValues.commonProductLineGroup'])->get()->all();
+		});
+
+		$api->get('technologies/{id}/productgroups', function() {
+			return null;
+		});
+	});
 
 	// example of free route
 	$api->get('free', function() {
 		return "It's free and working!";
-	});
-
-	$api->get('technologies', function() {
-		return ProductFamily::with(['commonTranslateWordId'])->get()->all();
-		//return ProductFamily::with(['commonProductGroupValues.commonProductGroup', 'commonProductGroupValues.commonProductLine', 'commonProductGroupValues.commonProductLineGroup'])->get()->all();
-	});
-
-	$api->get('technologies/{id}/productgroups', function() {
-		return null;
 	});
 
 });
