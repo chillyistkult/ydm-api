@@ -21,8 +21,13 @@ $api->version('v1', function ($api) {
 		return "It's free and working!";
 	});
 
-	$api->get('products', function() {
-		return ProductFamily::with(['commonProductGroupValues.commonProductGroup', 'commonProductGroupValues.commonProductLine', 'commonProductGroupValues.commonProductLineGroup'])->get();;
+	$api->get('technologies', function() {
+		return ProductFamily::with(['commonTranslateWordId'])->get()->all();
+		//return ProductFamily::with(['commonProductGroupValues.commonProductGroup', 'commonProductGroupValues.commonProductLine', 'commonProductGroupValues.commonProductLineGroup'])->get()->all();
+	});
+
+	$api->get('technologies/{id}/productgroups', function() {
+		return null;
 	});
 
 });

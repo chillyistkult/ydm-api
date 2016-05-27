@@ -27,12 +27,14 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        $customClaims = ['username' => $credentials['username']];
+
         if($validator->fails()) {
             throw new ValidationHttpException($validator->errors()->all());
         }
 
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
+            if (! $token = JWTAuth::attempt($credentials, $customClaims)) {
                 return $this->response->errorUnauthorized();
             }
         } catch (JWTException $e) {
