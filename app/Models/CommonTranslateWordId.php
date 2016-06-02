@@ -44,7 +44,7 @@ class CommonTranslateWordId extends Model {
     }
     */
 
-    public function commonProductLineGroups() {
+    public function productLineGroups() {
         return $this->hasMany(\App\Models\CommonProductLineGroup::class, 'displayName', 'wordID');
     }
 

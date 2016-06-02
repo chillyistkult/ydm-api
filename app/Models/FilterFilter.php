@@ -16,7 +16,7 @@ class FilterFilter extends Model {
         return $this->belongsTo(\App\Models\CommonProductGroup::class, 'productGroupID', 'productGroupID');
     }
 
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'displayName', 'wordID');
     }
 

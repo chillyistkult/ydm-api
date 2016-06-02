@@ -16,7 +16,7 @@ class CharacteristicCharacteristicRemark extends Model {
         return $this->belongsTo(\App\Models\CharacteristicCharacteristic::class, 'characteristicID', 'characteristicID');
     }
 
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'remark', 'wordID');
     }
 

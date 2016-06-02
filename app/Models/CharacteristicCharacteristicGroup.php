@@ -16,12 +16,12 @@ class CharacteristicCharacteristicGroup extends Model {
         return $this->belongsTo(\App\Models\CharacteristicTranslateWordId::class, 'displayName', 'wordID');
     }
 
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'helpTooltipDisplayName', 'wordID');
     }
 
     /*
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'infoTooltipDisplayName', 'wordID');
     }
     */

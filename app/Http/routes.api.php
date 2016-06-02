@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\CommonProductFamily as ProductFamily;
 	
 $api = app('Dingo\Api\Routing\Router');
 
@@ -11,18 +10,12 @@ $api->version('v1', function ($api) {
 	$api->post('auth/recovery', 'App\Api\V1\Controllers\AuthController@recovery');
 	$api->post('auth/reset', 'App\Api\V1\Controllers\AuthController@reset');
 
-	$api->group(['middleware' => ['api.auth']], function ($api) {
+	$api->group(['namespace' => 'App\Api\V1\Controllers', 'middleware' => ['api.auth']], function ($api) {
 		$api->get('protected', function () {
 			return "It's protected and working!";
 		});
-		$api->get('technologies', function() {
-			return ProductFamily::with(['commonTranslateWordId'])->get()->all();
-			//return ProductFamily::with(['commonProductGroupValues.commonProductGroup', 'commonProductGroupValues.commonProductLine', 'commonProductGroupValues.commonProductLineGroup'])->get()->all();
-		});
-
-		$api->get('technologies/{id}/productgroups', function() {
-			return null;
-		});
+		$api->get('technologies', 'TechnologyController@index');
+		$api->get('technologies/{id}/productlines', 'ProductLineController@index');
 	});
 
 	// example of free route

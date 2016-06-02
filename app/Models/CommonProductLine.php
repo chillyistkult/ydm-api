@@ -16,16 +16,16 @@ class CommonProductLine extends Model {
         return $this->belongsTo(\App\Models\CommonProductFamily::class, 'productFamilyID', 'productFamilyID');
     }
 
-    public function commonProductLineGroup() {
+    public function productLineGroup() {
         return $this->belongsTo(\App\Models\CommonProductLineGroup::class, 'productLineGroupID', 'productLineGroupID');
     }
 
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'displayName', 'wordID');
     }
 
     /*
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'selectionResultPrefix', 'wordID');
     }
     */

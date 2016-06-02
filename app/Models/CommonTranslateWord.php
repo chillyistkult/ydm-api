@@ -16,7 +16,7 @@ class CommonTranslateWord extends Model {
         return $this->belongsTo(\App\Models\I18NLanguage::class, 'langID', 'langID');
     }
 
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'wordID', 'wordID');
     }
 

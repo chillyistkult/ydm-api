@@ -24,7 +24,7 @@ class CommonProductGroupValue extends Model {
         return $this->belongsTo(\App\Models\CommonProductLine::class, 'productLineID', 'productLineID');
     }
 
-    public function commonProductLineGroup() {
+    public function productLineGroup() {
         return $this->belongsTo(\App\Models\CommonProductLineGroup::class, 'productLineGroupID', 'productLineGroupID');
     }
 

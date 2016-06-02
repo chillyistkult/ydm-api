@@ -12,11 +12,11 @@ class CommonProductLineGroup extends Model {
     protected $fillable = ['productLineGroupID', 'displayName', 'displaySequence', 'parentProductLineGroupID', 'description'];
 
 
-    public function commonProductLineGroup() {
+    public function productLineGroup() {
         return $this->belongsTo(\App\Models\CommonProductLineGroup::class, 'parentProductLineGroupID', 'productLineGroupID');
     }
 
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'displayName', 'wordID');
     }
 
@@ -28,7 +28,7 @@ class CommonProductLineGroup extends Model {
         return $this->hasMany(\App\Models\CommonProductLine::class, 'productLineGroupID', 'productLineGroupID');
     }
 
-    public function commonProductLineGroups() {
+    public function productLineGroups() {
         return $this->hasMany(\App\Models\CommonProductLineGroup::class, 'parentProductLineGroupID', 'productLineGroupID');
     }
 

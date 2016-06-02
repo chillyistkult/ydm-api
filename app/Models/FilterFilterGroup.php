@@ -12,15 +12,15 @@ class FilterFilterGroup extends Model {
     protected $fillable = ['filterGroupID', 'shortName', 'displayName', 'infoTooltip', 'helpTooltip', 'initiallyCollapsed', 'displaySequence'];
 
 
-    public function commonTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'displayName', 'wordID');
     }
 
-    public function commonTranslateWordId() {
+    public function helpTranslation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'helpTooltip', 'wordID');
     }
 
-    public function commonTranslateWordId() {
+    public function tooltipTranslation() {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'infoTooltip', 'wordID');
     }
 
