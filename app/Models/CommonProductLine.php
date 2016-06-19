@@ -12,7 +12,7 @@ class CommonProductLine extends Model {
     protected $fillable = ['productLineID', 'productFamilyID', 'shortName', 'displayName', 'selectionResultPrefix', 'productLineGroupID', 'displaySequence'];
 
 
-    public function commonProductFamily() {
+    public function productFamily() {
         return $this->belongsTo(\App\Models\CommonProductFamily::class, 'productFamilyID', 'productFamilyID');
     }
 
@@ -34,7 +34,7 @@ class CommonProductLine extends Model {
         return $this->belongsToMany(\App\Models\FilterProperty::class, 'Filter_ProductLineProperties', 'productLineID', 'productPropertyID');
     }
 
-    public function characteristicCharacteristicRemarks() {
+    public function characteristicRemarks() {
         return $this->hasMany(\App\Models\CharacteristicCharacteristicRemark::class, 'productLineID', 'productLineID');
     }
 
@@ -42,15 +42,15 @@ class CommonProductLine extends Model {
         return $this->hasMany(\App\Models\CharacteristicModel::class, 'productLineID', 'productLineID');
     }
 
-    public function commonProductGroupValues() {
+    public function productGroups() {
         return $this->hasMany(\App\Models\CommonProductGroupValue::class, 'productLineID', 'productLineID');
     }
 
-    public function commonProductLineAndModelLimits() {
+    public function productLineAndModelLimits() {
         return $this->hasMany(\App\Models\CommonProductLineAndModelLimit::class, 'productLineID', 'productLineID');
     }
 
-    public function filterProductLineProperties() {
+    public function productLineProperties() {
         return $this->hasMany(\App\Models\FilterProductLineProperty::class, 'productLineID', 'productLineID');
     }
 

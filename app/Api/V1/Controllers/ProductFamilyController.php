@@ -1,16 +1,16 @@
 <?php
 namespace App\Api\V1\Controllers;
 
-use App\Models\CommonProductFamily as Technology;
+use App\Models\CommonProductFamily as ProductFamily;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\Api\V1\Requests\TechnologyRequest;
-use App\Api\V1\Transformers\TechnologyTransformer;
+use App\Api\V1\Requests\ProductFamilyRequest;
+use App\Api\V1\Transformers\ProductFamilyTransformer;
 
 /**
  * @Resource('Technologies', uri='/technologies')
  */
-class TechnologyController extends BaseController
+class ProductFamilyController extends BaseController
 {
     /**
      * Show all technologies
@@ -21,17 +21,17 @@ class TechnologyController extends BaseController
      */
     public function index()
     {
-        return $this->collection(Technology::with(['translation'])->get(), new TechnologyTransformer());
+        return $this->collection(ProductFamily::where('displaySequence', '!=', -1)->orderBy('displaySequence')->get(), new ProductFamilyTransformer());
     }
     /**
-     * Store a new technology in the database.
+     * Store a new ProductFamily in the database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(TechnologyRequest $request)
+    public function store(ProductFamilyRequest $request)
     {
-        return Technology::create($request);
+        return ProductFamily::create($request);
     }
     /**
      * Display the specified resource.
@@ -41,20 +41,20 @@ class TechnologyController extends BaseController
      */
     public function show($id)
     {
-        return $this->item(Technology::findOrFail($id), new TechnologyTransformer());
+        return $this->item(ProductFamily::findOrFail($id), new ProductFamilyTransformer());
     }
     /**
-     * Update the technology in the database.
+     * Update the ProductFamily in the database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(TechnologyRequest $request, $id)
+    public function update(ProductFamilyRequest $request, $id)
     {
-        $technology = TechnologyRequest::findOrFail($id);
-        $technology->update($request);
-        return $technology;
+        $productFamily = ProductFamilyRequest::findOrFail($id);
+        $productFamily->update($request);
+        return $productFamily;
     }
     /**
      * Remove the specified resource from storage.
@@ -64,6 +64,6 @@ class TechnologyController extends BaseController
      */
     public function destroy($id)
     {
-        return Technology::destroy($id);
+        return ProductFamily::destroy($id);
     }
 }

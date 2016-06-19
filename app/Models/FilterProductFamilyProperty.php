@@ -12,11 +12,11 @@ class FilterProductFamilyProperty extends Model {
     protected $fillable = ['productFamilyID', 'productPropertyID'];
 
 
-    public function commonProductFamily() {
+    public function productFamily() {
         return $this->belongsTo(\App\Models\CommonProductFamily::class, 'productFamilyID', 'productFamilyID');
     }
 
-    public function filterProperty() {
+    public function property() {
         return $this->belongsTo(\App\Models\FilterProperty::class, 'productPropertyID', 'propertyID');
     }
 

@@ -14,8 +14,12 @@ $api->version('v1', function ($api) {
 		$api->get('protected', function () {
 			return "It's protected and working!";
 		});
-		$api->get('technologies', 'TechnologyController@index');
+		
+		$api->get('technologies', 'ProductFamilyController@index');
+		$api->get('technologies/{id}', 'ProductFamilyController@show');
 		$api->get('technologies/{id}/productlines', 'ProductLineController@index');
+		$api->get('technologies/{pfId}/productlines/{plId}', 'ProductLineController@show');
+		$api->get('technologies/{pfId}/productlines/{pgId}/filters', 'FilterController@index');
 	});
 
 	// example of free route

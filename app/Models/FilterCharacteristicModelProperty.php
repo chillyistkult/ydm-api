@@ -16,7 +16,7 @@ class FilterCharacteristicModelProperty extends Model {
         return $this->belongsTo(\App\Models\CharacteristicModel::class, 'characteristicModelID', 'characteristicModelID');
     }
 
-    public function filterProperty() {
+    public function property() {
         return $this->belongsTo(\App\Models\FilterProperty::class, 'propertyID', 'propertyID');
     }
 

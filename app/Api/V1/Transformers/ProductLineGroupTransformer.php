@@ -6,10 +6,31 @@ use League\Fractal\TransformerAbstract;
 
 class ProductLineGroupTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = [
+        'productLineGroup', 'productGroups'
+    ];
+
     public function transform(ProductLineGroup $productLineGroup)
     {
         return [
             'id' => (int) $productLineGroup->productLineGroupID,
+            'description' => $productLineGroup->translation->description
         ];
+    }
+
+    public function includeProductLineGroup(ProductLineGroup $productLineGroup)
+    {
+        $productLineGroup = $productLineGroup->productLineGroup;
+        if ($productLineGroup) {
+            return $this->item($productLineGroup, new ProductLineGroupTransformer(), null);
+        }
+    }
+
+    public function includeProductGroups(ProductLineGroup $productLineGroup)
+    {
+        $productGroups = $productLineGroup->productGroups;
+        if (!$productGroups->isEmpty()) {
+            return $this->collection($productGroups, new ProductGroupValueTransformer(), null);
+        }
     }
 }

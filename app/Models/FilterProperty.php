@@ -12,7 +12,7 @@ class FilterProperty extends Model {
     protected $fillable = ['propertyID', 'shortName', 'displayName', 'propertyGroupID', 'minTemperatureInCelsius', 'maxTemperatureInCelsius', 'maxPressureInBarAbsolute', 'aggregateStateID', 'displaySequence'];
 
 
-    public function filterPropertyGroup() {
+    public function propertyGroup() {
         return $this->belongsTo(\App\Models\FilterPropertyGroup::class, 'propertyGroupID', 'propertyGroupID');
     }
 
@@ -24,27 +24,27 @@ class FilterProperty extends Model {
         return $this->belongsToMany(\App\Models\CharacteristicModel::class, 'Filter_CharacteristicModelProperties', 'propertyID', 'characteristicModelID');
     }
 
-    public function commonProductFamilies() {
+    public function productFamilies() {
         return $this->belongsToMany(\App\Models\CommonProductFamily::class, 'Filter_ProductFamilyProperties', 'productPropertyID', 'productFamilyID');
     }
 
-    public function commonProductLines() {
+    public function productLines() {
         return $this->belongsToMany(\App\Models\CommonProductLine::class, 'Filter_ProductLineProperties', 'productPropertyID', 'productLineID');
     }
 
-    public function filterCharacteristicModelProperties() {
+    public function characteristicModelProperties() {
         return $this->hasMany(\App\Models\FilterCharacteristicModelProperty::class, 'propertyID', 'propertyID');
     }
 
-    public function filterProductFamilyProperties() {
+    public function productFamilyProperties() {
         return $this->hasMany(\App\Models\FilterProductFamilyProperty::class, 'productPropertyID', 'propertyID');
     }
 
-    public function filterProductLineProperties() {
+    public function productLineProperties() {
         return $this->hasMany(\App\Models\FilterProductLineProperty::class, 'productPropertyID', 'propertyID');
     }
 
-    public function filterTubeFloatCombinationProperties() {
+    public function tubeFloatCombinationProperties() {
         return $this->hasMany(\App\Models\FilterTubeFloatCombinationProperty::class, 'propertyID', 'propertyID');
     }
 

@@ -12,15 +12,15 @@ class CommonProductGroupValue extends Model {
     protected $fillable = ['productGroupValueID', 'productGroupID', 'productFamilyID', 'productLineGroupID', 'productLineID'];
 
 
-    public function commonProductFamily() {
+    public function productFamily() {
         return $this->belongsTo(\App\Models\CommonProductFamily::class, 'productFamilyID', 'productFamilyID');
     }
 
-    public function commonProductGroup() {
+    public function productGroup() {
         return $this->belongsTo(\App\Models\CommonProductGroup::class, 'productGroupID', 'productGroupID');
     }
 
-    public function commonProductLine() {
+    public function productLine() {
         return $this->belongsTo(\App\Models\CommonProductLine::class, 'productLineID', 'productLineID');
     }
 

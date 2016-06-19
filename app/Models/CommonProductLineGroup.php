@@ -20,11 +20,11 @@ class CommonProductLineGroup extends Model {
         return $this->belongsTo(\App\Models\CommonTranslateWordId::class, 'displayName', 'wordID');
     }
 
-    public function commonProductGroupValues() {
+    public function productGroups() {
         return $this->hasMany(\App\Models\CommonProductGroupValue::class, 'productLineGroupID', 'productLineGroupID');
     }
 
-    public function commonProductLines() {
+    public function productLines() {
         return $this->hasMany(\App\Models\CommonProductLine::class, 'productLineGroupID', 'productLineGroupID');
     }
 

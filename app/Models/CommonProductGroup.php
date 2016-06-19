@@ -12,11 +12,11 @@ class CommonProductGroup extends Model {
     protected $fillable = ['productGroupID', 'description'];
 
 
-    public function commonProductGroupValues() {
+    public function productGroupValues() {
         return $this->hasMany(\App\Models\CommonProductGroupValue::class, 'productGroupID', 'productGroupID');
     }
 
-    public function filterFilters() {
+    public function filters() {
         return $this->hasMany(\App\Models\FilterFilter::class, 'productGroupID', 'productGroupID');
     }
 

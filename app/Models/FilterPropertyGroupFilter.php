@@ -12,11 +12,11 @@ class FilterPropertyGroupFilter extends Model {
     protected $fillable = ['filterID', 'propertyGroupID', 'description'];
 
 
-    public function filterFilter() {
+    public function filter() {
         return $this->belongsTo(\App\Models\FilterFilter::class, 'filterID', 'filterID');
     }
 
-    public function filterPropertyGroup() {
+    public function propertyGroup() {
         return $this->belongsTo(\App\Models\FilterPropertyGroup::class, 'propertyGroupID', 'propertyGroupID');
     }
 

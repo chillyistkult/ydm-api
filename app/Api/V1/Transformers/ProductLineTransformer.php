@@ -1,32 +1,39 @@
 <?php
 namespace App\Api\V1\Transformers;
 
-use App\Models\CommonProductLine as Product;
+use App\Models\CommonProductLine as ProductLine;
 use League\Fractal\TransformerAbstract;
 
-class ProductTransformer extends TransformerAbstract
+class ProductLineTransformer extends TransformerAbstract
 {
 
     protected $defaultIncludes = [
-        'productLineGroup'
+        'productLineGroup', //'productGroups'
     ];
 
-    public function transform(Product $product)
+    public function transform(ProductLine $productLine)
     {
         return [
-            'id' 	        => (int) $product->productLineID,
-            'name'          => $product->shortName,
-            'description'   => $product->translation->description,
-            'sequenze'	    => (int) $product->displaySequence
-
+            'id' 	        => (int) $productLine->productLineID,
+            'name'          => $productLine->shortName,
+            'description'   => $productLine->translation->description,
+            'sequenze'	    => (int) $productLine->displaySequence,
         ];
     }
 
-    public function includeProductLineGroup(Product $product)
+    public function includeProductLineGroup(ProductLine $productLine)
     {
-        $productLineGroup = $product->productLineGroup;
+        $productLineGroup = $productLine->productLineGroup;
         if ($productLineGroup) {
             return $this->item($productLineGroup, new ProductLineGroupTransformer(), null);
+        }
+    }
+
+    public function includeProductGroups(ProductLine $productLine)
+    {
+        $productGroups = $productLine->productGroups;
+        if (!$productGroups->isEmpty()) {
+            return $this->collection($productGroups, new ProductGroupValueTransformer(), null);
         }
     }
 }

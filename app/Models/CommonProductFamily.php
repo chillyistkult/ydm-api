@@ -20,15 +20,15 @@ class CommonProductFamily extends Model {
         return $this->belongsToMany(\App\Models\FilterProperty::class, 'Filter_ProductFamilyProperties', 'productFamilyID', 'productPropertyID');
     }
 
-    public function commonProductGroupValues() {
+    public function productGroups() {
         return $this->hasMany(\App\Models\CommonProductGroupValue::class, 'productFamilyID', 'productFamilyID');
     }
 
-    public function commonProductLines() {
+    public function productLines() {
         return $this->hasMany(\App\Models\CommonProductLine::class, 'productFamilyID', 'productFamilyID');
     }
 
-    public function filterProductFamilyProperties() {
+    public function productFamilyProperties() {
         return $this->hasMany(\App\Models\FilterProductFamilyProperty::class, 'productFamilyID', 'productFamilyID');
     }
 

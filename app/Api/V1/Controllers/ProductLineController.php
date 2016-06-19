@@ -4,8 +4,8 @@ namespace App\Api\V1\Controllers;
 use App\Models\CommonProductLine as ProductLine;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use App\Api\V1\Requests\ProductRequest;
-use App\Api\V1\Transformers\ProductTransformer;
+use App\Api\V1\Requests\ProductLineRequest;
+use App\Api\V1\Transformers\ProductLineTransformer;
 
 /**
  * @Resource('Technologies', uri='/technologies')
@@ -19,9 +19,10 @@ class ProductLineController extends BaseController
      *
      * @Get('/')
      */
-    public function index($id)
+    public function index(Request $request)
     {
-        return ProductLine::where('productFamilyID', '=', $id)->with('translation', 'productLineGroup.productLineGroup.translation')->get()->all();
+        $productFamilyId = $request->route('id');
+        return $this->collection(ProductLine::where('productFamilyID', '=', $productFamilyId)->where('displaySequence', '!=', -1)->orderBy('displaySequence')->get(), new ProductLineTransformer());
     }
 
     /**
@@ -41,9 +42,10 @@ class ProductLineController extends BaseController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        return $this->item(ProductLine::findOrFail($id), new ProductTransformer());
+        $productLineId = $request->route('plId');
+        return $this->item(ProductLine::findOrFail($productLineId), new ProductLineTransformer());
     }
 
     /**
@@ -53,9 +55,9 @@ class ProductLineController extends BaseController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, $id)
+    public function update(ProductLineRequest $request, $id)
     {
-        $Product = ProductRequest::findOrFail($id);
+        $Product = ProductLineRequest::findOrFail($id);
         $Product->update($request);
         return $Product;
     }

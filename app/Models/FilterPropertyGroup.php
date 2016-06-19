@@ -12,15 +12,15 @@ class FilterPropertyGroup extends Model {
     protected $fillable = ['propertyGroupID', 'shortName', 'displaySequence'];
 
 
-    public function filterFilters() {
+    public function filters() {
         return $this->belongsToMany(\App\Models\FilterFilter::class, 'Filter_PropertyGroupFilter', 'propertyGroupID', 'filterID');
     }
 
-    public function filterProperties() {
+    public function properties() {
         return $this->hasMany(\App\Models\FilterProperty::class, 'propertyGroupID', 'propertyGroupID');
     }
 
-    public function filterPropertyGroupFilters() {
+    public function propertyGroupFilters() {
         return $this->hasMany(\App\Models\FilterPropertyGroupFilter::class, 'propertyGroupID', 'propertyGroupID');
     }
 
