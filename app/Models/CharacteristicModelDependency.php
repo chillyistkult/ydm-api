@@ -11,12 +11,13 @@ class CharacteristicModelDependency extends Model {
     protected $table = 'Characteristic_ModelDependency';
     protected $fillable = ['baseCharacteristicModelID', 'requiredCharacteristicModelID'];
 
-
-    public function characteristicModelBase() {
+    /*
+    public function model() {
         return $this->belongsTo(\App\Models\CharacteristicModel::class, 'baseCharacteristicModelID', 'characteristicModelID');
     }
+    */
 
-    public function characteristicModelRequired() {
+    public function model() {
         return $this->belongsTo(\App\Models\CharacteristicModel::class, 'requiredCharacteristicModelID', 'characteristicModelID');
     }
 

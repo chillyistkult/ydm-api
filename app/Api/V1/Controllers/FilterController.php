@@ -1,7 +1,6 @@
 <?php
 namespace App\Api\V1\Controllers;
 
-use DB;
 use App\Models\FilterFilter as Filter;
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -22,6 +21,12 @@ class FilterController extends BaseController
      */
     public function index(Request $request)
     {
+        return $this->collection(Filter::where('resultDisplaySequence', '!=', -1)->orderBy('resultDisplaySequence')->get(), new FilterTransformer());
+
+    }
+
+    public function getByTechnologyAndProduct(Request $request)
+    {
         $productGroupId = $request->route('pgId');
         $productFamilyId = $request->route('pfId');
 
@@ -35,7 +40,6 @@ class FilterController extends BaseController
             ->where('resultDisplaySequence', '!=', -1)
             ->orderBy('resultDisplaySequence')
             ->get(), new FilterTransformer());
-
     }
 
     /**
@@ -51,13 +55,11 @@ class FilterController extends BaseController
 
     /**
      * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        return $this->item(Filter::findOrFail($id), new FilterTransformer());
+        $filterId = $request->route('id');
+        return $this->item(Filter::where('filterID', '=', $filterId)->firstOrFail(), new FilterTransformer());
     }
 
     /**

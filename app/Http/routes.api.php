@@ -14,12 +14,25 @@ $api->version('v1', function ($api) {
 		$api->get('protected', function () {
 			return "It's protected and working!";
 		});
-		
+
 		$api->get('technologies', 'ProductFamilyController@index');
 		$api->get('technologies/{id}', 'ProductFamilyController@show');
-		$api->get('technologies/{id}/productlines', 'ProductLineController@index');
+		$api->get('technologies/{id}/productlines', 'ProductLineController@index')->where(['switch' => '^(lines|groups)$']);
 		$api->get('technologies/{pfId}/productlines/{plId}', 'ProductLineController@show');
-		$api->get('technologies/{pfId}/productlines/{pgId}/filters', 'FilterController@index');
+		$api->get('technologies/{pfId}/productlines/{pgId}/filters', 'FilterController@getByTechnologyAndProduct');
+		$api->get('filters', 'FilterController@index');
+		$api->get('filters/{id}', 'FilterController@show')->where('id', '[0-9]+');
+		$api->get('filters/{fId}/properties/{pId}/models', 'ModelController@getByFilterAndProperty');
+		$api->get('filters/types', 'FilterTypeController@index');
+		$api->get('filters/types/{id}', 'FilterTypeController@show')->where('id', '[0-9]+');
+		$api->get('filters/groups', 'FilterGroupController@index');
+		$api->get('filters/groups/{id}', 'FilterGroupController@show')->where('id', '[0-9]+');
+		$api->get('filters/properties', 'FilterPropertyController@index');
+		$api->get('filters/properties/{id}', 'FilterPropertyController@show')->where('id', '[0-9]+');
+		$api->get('filters/properties/{pId}/models/{mId}', 'FilterPropertyController@show');
+		$api->get('models', 'ModelController@index');
+		$api->get('models/{id}', 'ModelController@show');
+
 	});
 
 	// example of free route

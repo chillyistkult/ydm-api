@@ -15,7 +15,8 @@ class FilterTransformer extends TransformerAbstract
     {
         return [
             'id' => (int) $filter->filterID,
-            'name' => $filter->translation->description
+            'name' => $filter->translation->description,
+            'sequence' => $filter->filterDisplaySequence
         ];
     }
 

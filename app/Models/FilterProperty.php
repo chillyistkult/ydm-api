@@ -8,8 +8,10 @@ class FilterProperty extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'propertyID';
+
     protected $table = 'Filter_Property';
-    protected $fillable = ['propertyID', 'shortName', 'displayName', 'propertyGroupID', 'minTemperatureInCelsius', 'maxTemperatureInCelsius', 'maxPressureInBarAbsolute', 'aggregateStateID', 'displaySequence'];
+    protected $fillable = ['shortName', 'displayName', 'propertyGroupID', 'minTemperatureInCelsius', 'maxTemperatureInCelsius', 'maxPressureInBarAbsolute', 'aggregateStateID', 'displaySequence'];
 
 
     public function propertyGroup() {
@@ -32,7 +34,7 @@ class FilterProperty extends Model {
         return $this->belongsToMany(\App\Models\CommonProductLine::class, 'Filter_ProductLineProperties', 'productPropertyID', 'productLineID');
     }
 
-    public function characteristicModelProperties() {
+    public function modelProperties() {
         return $this->hasMany(\App\Models\FilterCharacteristicModelProperty::class, 'propertyID', 'propertyID');
     }
 

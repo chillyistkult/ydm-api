@@ -8,49 +8,51 @@ class CharacteristicModel extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'characteristicModelID';
+
     protected $table = 'Characteristic_Model';
-    protected $fillable = ['characteristicModelID', 'code', 'description', 'productLineID', 'basePrice', 'priceInUSD', 'priceInJPY', 'validFrom', 'validTo', 'informationText', 'featureModelPrefix'];
+    protected $fillable = ['code', 'description', 'productLineID', 'basePrice', 'priceInUSD', 'priceInJPY', 'validFrom', 'validTo', 'informationText', 'featureModelPrefix'];
 
 
-    public function characteristicTranslateWordId() {
+    public function translation() {
         return $this->belongsTo(\App\Models\CharacteristicTranslateWordId::class, 'informationText', 'wordID');
     }
 
-    public function commonProductLine() {
+    public function productLine() {
         return $this->belongsTo(\App\Models\CommonProductLine::class, 'productLineID', 'productLineID');
     }
 
-    public function characteristicModels() {
+    public function bases() {
         return $this->belongsToMany(\App\Models\CharacteristicModel::class, 'Characteristic_ModelDependency', 'baseCharacteristicModelID', 'requiredCharacteristicModelID');
     }
 
-    /*
-    public function characteristicModels() {
+
+    public function required() {
         return $this->belongsToMany(\App\Models\CharacteristicModel::class, 'Characteristic_ModelDependency', 'requiredCharacteristicModelID', 'baseCharacteristicModelID');
     }
-    */
 
-    public function characteristicModelComponentValues() {
+
+    public function componentValues() {
         return $this->belongsToMany(\App\Models\CharacteristicModelComponentValue::class, 'Characteristic_ModelModelComponentValueRelation', 'characteristicModelID', 'modelComponentValueID');
     }
 
-    public function filterProperties() {
+    public function properties() {
         return $this->belongsToMany(\App\Models\FilterProperty::class, 'Filter_CharacteristicModelProperties', 'characteristicModelID', 'propertyID');
     }
 
-    public function characteristicCharacteristicRemarks() {
+    public function remarks() {
         return $this->hasMany(\App\Models\CharacteristicCharacteristicRemark::class, 'characteristicModelID', 'characteristicModelID');
     }
 
-    public function characteristicInheritedFeatures() {
+    public function features() {
         return $this->hasMany(\App\Models\CharacteristicInheritedFeature::class, 'characteristicModelID', 'characteristicModelID');
     }
 
-    public function characteristicModelCharacteristics() {
+    public function characteristics() {
         return $this->hasMany(\App\Models\CharacteristicModelCharacteristic::class, 'characteristicModelID', 'characteristicModelID');
     }
 
-    public function characteristicModelDependencies() {
+    public function dependencies() {
         return $this->hasMany(\App\Models\CharacteristicModelDependency::class, 'baseCharacteristicModelID', 'characteristicModelID');
     }
 
@@ -60,11 +62,11 @@ class CharacteristicModel extends Model {
     }
     */
 
-    public function characteristicModelModelComponentValueRelations() {
+    public function valueRelations() {
         return $this->hasMany(\App\Models\CharacteristicModelModelComponentValueRelation::class, 'characteristicModelID', 'characteristicModelID');
     }
 
-    public function filterCharacteristicModelProperties() {
+    public function modelProperties() {
         return $this->hasMany(\App\Models\FilterCharacteristicModelProperty::class, 'characteristicModelID', 'characteristicModelID');
     }
 
