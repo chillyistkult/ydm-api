@@ -8,9 +8,11 @@ class CommonTranslateWord extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'wordID';
     protected $table = 'Common_TranslateWord';
-    protected $fillable = ['langID', 'wordID', 'word'];
+    protected $fillable = ['word'];
 
+    public $timestamps = false;
 
     public function i18NLanguage() {
         return $this->belongsTo(\App\Models\I18NLanguage::class, 'langID', 'langID');

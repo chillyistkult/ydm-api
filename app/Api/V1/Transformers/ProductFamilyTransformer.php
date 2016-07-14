@@ -16,7 +16,7 @@ class ProductFamilyTransformer extends TransformerAbstract
         return [
             'id' 	        => (int) $productFamily->productFamilyID,
             'name'          => $productFamily->shortName,
-            'description'   => $productFamily->translation->description,
+            'description'   => $productFamily->translation->en->first()->word,
             'sequenze'	    => (int) $productFamily->displaySequence
         ];
     }

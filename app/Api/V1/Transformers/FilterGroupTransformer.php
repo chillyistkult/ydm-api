@@ -11,7 +11,7 @@ class FilterGroupTransformer extends TransformerAbstract
     {
         return [
             'id' => (int) $filterGroup->filterGroupID,
-            'name' => $filterGroup->translation->description
+            'name' => $filterGroup->shortName
         ];
     }
     

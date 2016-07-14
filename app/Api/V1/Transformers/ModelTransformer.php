@@ -16,7 +16,7 @@ class ModelTransformer extends TransformerAbstract
             'id' => (int) $model->characteristicModelID,
             'code' => $model->code,
             'name' => $model->description,
-            //'information' => $model->translation->description
+            //'information' => $model->translation->en->first()->word,
         ];
     }
 

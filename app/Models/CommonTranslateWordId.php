@@ -11,6 +11,7 @@ class CommonTranslateWordId extends Model {
     protected $table = 'Common_TranslateWordId';
     protected $fillable = ['wordID', 'description'];
 
+    public $timestamps = false;
 
     public function i18NLanguages() {
         return $this->belongsToMany(\App\Models\I18NLanguage::class, 'Common_TranslateWord', 'wordID', 'langID');
@@ -48,8 +49,12 @@ class CommonTranslateWordId extends Model {
         return $this->hasMany(\App\Models\CommonProductLineGroup::class, 'displayName', 'wordID');
     }
 
-    public function commonTranslateWords() {
+    public function languages() {
         return $this->hasMany(\App\Models\CommonTranslateWord::class, 'wordID', 'wordID');
+    }
+
+    public function en() {
+        return $this->languages()->where('langID', 1);
     }
 
     public function filterFilters() {

@@ -11,7 +11,7 @@ class FilterPropertyTransformer extends TransformerAbstract
     {
         return [
             'id' => (int) $filterProperty->propertyID,
-            'name' => $filterProperty->translation->description,
+            'name' => $filterProperty->translation->en->first()->word,
             'minTemp' => $filterProperty->minTemperatureInCelsius,
             'maxTemp' => $filterProperty->maxTemperatureInCelsius,
             'minPressure' => $filterProperty->minPressureInBarAbsolute,

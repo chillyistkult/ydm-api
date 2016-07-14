@@ -22,6 +22,7 @@ $api->version('v1', function ($api) {
 		$api->get('technologies/{pfId}/productlines/{pgId}/filters', 'FilterController@getByTechnologyAndProduct');
 		$api->get('filters', 'FilterController@index');
 		$api->get('filters/{id}', 'FilterController@show')->where('id', '[0-9]+');
+		$api->put('filters/{id}', 'FilterController@update')->where('id', '[0-9]+');
 		$api->get('filters/{fId}/properties/{pId}/models', 'ModelController@getByFilterAndProperty');
 		$api->get('filters/types', 'FilterTypeController@index');
 		$api->get('filters/types/{id}', 'FilterTypeController@show')->where('id', '[0-9]+');

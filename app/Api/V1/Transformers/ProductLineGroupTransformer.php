@@ -14,7 +14,7 @@ class ProductLineGroupTransformer extends TransformerAbstract
     {
         return [
             'id' => (int) $productLineGroup->productLineGroupID,
-            'description' => $productLineGroup->translation->description
+            'description' => $productLineGroup->translation->en->first()->word,
         ];
     }
 

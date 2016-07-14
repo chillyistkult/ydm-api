@@ -2,7 +2,12 @@
 namespace App\Api\V1\Controllers;
 
 use App\Models\FilterFilter as Filter;
+use App\Models\FilterFilterGroup as FilterGroup;
+use App\Models\FilterFilterType as FilterType;
+use App\Models\CommonTranslateWord as Translation;
 use App\Http\Requests;
+use DB;
+use Dingo\Api\Exception\ResourceException;
 use Illuminate\Http\Request;
 use App\Api\V1\Requests\FilterRequest;
 use App\Api\V1\Transformers\FilterTransformer;
@@ -71,9 +76,36 @@ class FilterController extends BaseController
      */
     public function update(FilterRequest $request, $id)
     {
-        $Product = Filter::findOrFail($id);
-        $Product->update($request);
-        return $Product;
+
+        DB::beginTransaction(); //Start transaction!
+
+        try{
+            $input = $request->json()->all();
+
+            //Search filter with given ID and include translation relation
+            $filter = Filter::with('translation.en')->findOrFail($id);
+
+            //Search filter group and type with given ID
+            $group = FilterGroup::findOrFail($input['group']['id']);
+            $type = FilterType::findOrFail($input['type']['id']);
+
+            //Update translation
+            $filter->translation->en->first()->word = $input['name'];
+
+            //Update relations
+            $filter->group()->associate($group);
+            $filter->type()->associate($type);
+
+            //Save filter and relations
+            $filter->push();
+            DB::commit();
+            return $this->item($filter, new FilterTransformer());
+        }
+        catch(\Exception $e)
+        {
+            DB::rollback();
+            throw $e;
+        }
     }
 
     /**

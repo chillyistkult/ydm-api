@@ -8,9 +8,11 @@ class FilterFilter extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'filterID';
     protected $table = 'Filter_Filter';
-    protected $fillable = ['filterID', 'shortName', 'displayName', 'filterTypeID', 'productGroupID', 'filterGroupID', 'resultDisplaySequence', 'filterDisplaySequence', 'filterSpaceLeftInPixel', 'filterSpaceRightInPixel', 'preselectedValueID'];
+    protected $fillable = ['shortName', 'displayName', 'filterTypeID', 'productGroupID', 'filterGroupID', 'resultDisplaySequence', 'filterDisplaySequence', 'filterSpaceLeftInPixel', 'filterSpaceRightInPixel', 'preselectedValueID'];
 
+    public $timestamps = false;
 
     public function productGroup() {
         return $this->belongsTo(\App\Models\CommonProductGroup::class, 'productGroupID', 'productGroupID');

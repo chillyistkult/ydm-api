@@ -16,7 +16,7 @@ class ProductLineTransformer extends TransformerAbstract
         return [
             'id' 	        => (int) $productLine->productLineID,
             'name'          => $productLine->shortName,
-            'description'   => $productLine->translation->description,
+            'description'   => $productLine->translation->en->first()->word,
             'sequenze'	    => (int) $productLine->displaySequence,
         ];
     }
