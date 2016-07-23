@@ -30,6 +30,7 @@ $api->version('v1', function ($api) {
 		$api->get('filters/groups/{id}', 'FilterGroupController@show')->where('id', '[0-9]+');
 		$api->get('filters/properties', 'FilterPropertyController@index');
 		$api->get('filters/properties/{id}', 'FilterPropertyController@show')->where('id', '[0-9]+');
+		$api->put('filters/properties/{id}', 'FilterPropertyController@update')->where('id', '[0-9]+');
 		$api->get('filters/properties/{pId}/models/{mId}', 'FilterPropertyController@show');
 		$api->get('models', 'ModelController@index');
 		$api->get('models/{id}', 'ModelController@show');

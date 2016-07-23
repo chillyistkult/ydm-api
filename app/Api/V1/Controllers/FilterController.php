@@ -43,7 +43,7 @@ class FilterController extends BaseController
             $q->whereIn('Common_ProductGroupValue.productLineID', [$productGroupId, null]);
         })
             ->where('resultDisplaySequence', '!=', -1)
-            ->orderBy('resultDisplaySequence')
+            ->orderBy('filterDisplaySequence')
             ->get(), new FilterTransformer());
     }
 
@@ -68,7 +68,7 @@ class FilterController extends BaseController
     }
 
     /**
-     * Update the product in the database.
+     * Update the filter in the database.
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id

@@ -12,9 +12,9 @@ class FilterPropertyTransformer extends TransformerAbstract
         return [
             'id' => (int) $filterProperty->propertyID,
             'name' => $filterProperty->translation->en->first()->word,
+            'sequence' => (int) $filterProperty->displaySequence,
             'minTemp' => $filterProperty->minTemperatureInCelsius,
             'maxTemp' => $filterProperty->maxTemperatureInCelsius,
-            'minPressure' => $filterProperty->minPressureInBarAbsolute,
             'maxPressure' => $filterProperty->maxPressureInBarAbsolute
         ];
     }

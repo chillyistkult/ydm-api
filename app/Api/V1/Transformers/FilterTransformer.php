@@ -16,7 +16,9 @@ class FilterTransformer extends TransformerAbstract
         return [
             'id' => (int) $filter->filterID,
             'name' => $filter->translation->en->first()->word,
-            'sequence' => $filter->filterDisplaySequence
+            'sequence' => (int) $filter->filterDisplaySequence,
+            'spaceLeft' => (int) $filter->filterSpaceLeftInPixel,
+            'spaceRight' => (int) $filter->filterSpaceRightInPixel
         ];
     }
 

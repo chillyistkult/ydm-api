@@ -1,9 +1,8 @@
 <?php
 namespace App\Api\V1\Controllers;
 namespace App\Api\V1\Requests;
-use Dingo\Api\Http\FormRequest;
 
-class FilterPropertyRequest extends FormRequest
+class FilterPropertyRequest extends JsonRequest
 {
     public function authorize()
     {
@@ -12,7 +11,8 @@ class FilterPropertyRequest extends FormRequest
     public function rules()
     {
         return [
-            
+            'name' => 'required',
+            'sequence' => 'required'
         ];
     }
 }
