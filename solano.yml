@@ -1,0 +1,36 @@
+# Configure language and services
+php:
+  version: '5.5.16'
+mysql:
+  version: '5.7'
+
+# Solano CI setup hooks (http://docs.solanolabs.com/Setup/setup-hooks/)
+hooks:
+  pre_setup: |
+    set -e # Exit on error
+    composer install # Install depdencies
+    composer require "solano/solano-phpunit" # Add Solano CI parallel test runner
+    git checkout -- composer.json # Restore to not change cache key_paths
+    cp -f .env-solano .env && php artisan key:generate # Set .env file
+    cp -f config/app-solano.php config/app.php # Set app config file
+  worker_setup: |
+    set -e # Exit on error
+    php artisan migrate --seed # create and populate tables
+    php artisan serve --port=$((TDDIUM_TID+8000)) & # Start server on worker-specific port in background
+# Use PHP/Composer specific cache settings
+cache:
+  key_paths:
+    - composer.json
+  save_paths:
+    - vendor
+
+# Run PHPUnit tests in parallel (requires adding "solano/solano-phpunit": "*" to "require-dev" in composer.json)
+tests:
+  - type: phpunit
+    mode: parallel
+    output: exit-status
+    config: phpunit.xml
+    command: vendor/bin/solano-phpunit
+    files:
+      - tests/**Test.php
+      - tests/**/*Test.php
