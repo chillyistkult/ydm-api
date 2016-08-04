@@ -18,7 +18,9 @@ abstract class JsonRequest extends FormRequest {
             return $this->container->call([$this, 'validator'], compact('factory'));
         }
         return $factory->make(
-            $this->json()->all(), $this->container->call([$this, 'rules']), $this->messages(), $this->attributes()
+            $this->json()->all(),
+            $this->container->call([$this, 'rules']),
+            $this->messages(), $this->attributes()
         );
     }
 }

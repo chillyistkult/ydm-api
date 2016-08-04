@@ -4,10 +4,9 @@ namespace App\Api\V1\Controllers;
 use App\Models\FilterFilter as Filter;
 use App\Models\FilterFilterGroup as FilterGroup;
 use App\Models\FilterFilterType as FilterType;
-use App\Models\CommonTranslateWord as Translation;
 use App\Http\Requests;
+use Dingo\Api\Dispatcher;
 use DB;
-use Dingo\Api\Exception\ResourceException;
 use Illuminate\Http\Request;
 use App\Api\V1\Requests\FilterRequest;
 use App\Api\V1\Transformers\FilterTransformer;
@@ -17,6 +16,12 @@ use App\Api\V1\Transformers\FilterTransformer;
  */
 class FilterController extends BaseController
 {
+
+    public function __construct(Dispatcher $dispatcher)
+    {
+        parent::__construct($dispatcher);
+    }
+
     /**
      * Show all product groups and corresponding products
      *
@@ -91,6 +96,7 @@ class FilterController extends BaseController
 
             //Update translation
             $filter->translation->en->first()->word = $input['name'];
+            $filter->filterDisplaySequence = $input['sequence'];
 
             //Update relations
             $filter->group()->associate($group);
@@ -104,6 +110,32 @@ class FilterController extends BaseController
         catch(\Exception $e)
         {
             DB::rollback();
+            throw $e;
+        }
+    }
+
+    /**
+     * Update the filter in the database.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAll(Request $request)
+    {
+        try{
+            $input = $request->json()->all();
+            $response = array();
+
+            foreach($input as $item) {
+                if(isset($item['id'])) {
+                    $response[] = $this->dispatcher->json($item)->put('filters/' . $item['id']);
+                }
+            }
+            return $this->collection(collect($response), new FilterTransformer());
+        }
+        catch(\Exception $e)
+        {
             throw $e;
         }
     }
