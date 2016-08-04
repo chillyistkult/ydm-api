@@ -1,0 +1,10 @@
+branch-defaults:
+  master:
+    environment: ydm-api
+global:
+  application_name: ydm
+  default_ec2_keyname: null
+  default_platform: 64bit Amazon Linux 2016.03 v2.1.4 running PHP 5.6
+  default_region: eu-west-1
+  profile: eb-cli
+  sc: git
