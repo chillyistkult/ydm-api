@@ -1,6 +1,6 @@
 machine:
   php:
-    version: 5.6
+    version: 5.6.22
 dependencies:
   pre:
     - sudo pip install awsebcli --ignore-installed setuptools
