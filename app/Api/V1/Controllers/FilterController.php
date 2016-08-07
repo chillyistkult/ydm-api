@@ -148,7 +148,7 @@ class FilterController extends BaseController
             $filter->productGroup()->associate($productGroup);
 
             //Save filter and relations
-            if($filter->push()) {
+            if ($filter->push()) {
                 DB::commit();
                 return $this->item($filter, new FilterTransformer());
             }
@@ -190,6 +190,17 @@ class FilterController extends BaseController
      */
     public function destroy($id)
     {
-        return Filter::destroy($id);
+        DB::beginTransaction(); //Start transaction!
+
+        try {
+            $filter = Filter::findOrFail($id);
+            if ($filter->delete()) {
+                DB::commit();
+                return $this->item($filter, new FilterTransformer());
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 }
