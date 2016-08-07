@@ -1,9 +1,12 @@
 <?php
 namespace App\Api\V1\Controllers;
 
+use App\Models\CommonTranslateWord;
+use App\Models\CommonTranslateWordId;
 use App\Models\FilterFilter as Filter;
 use App\Models\FilterFilterGroup as FilterGroup;
 use App\Models\FilterFilterType as FilterType;
+use App\Models\CommonProductGroup as ProductGroup;
 use App\Http\Requests;
 use Dingo\Api\Dispatcher;
 use DB;
@@ -31,25 +34,22 @@ class FilterController extends BaseController
      */
     public function index(Request $request)
     {
-        return $this->collection(Filter::where('resultDisplaySequence', '!=', -1)->orderBy('resultDisplaySequence')->get(), new FilterTransformer());
-
-    }
-
-    public function getByTechnologyAndProduct(Request $request)
-    {
         $productGroupId = $request->route('pgId');
         $productFamilyId = $request->route('pfId');
+        if ($productGroupId && $productFamilyId) {
+            return $this->collection(Filter::join('Common_ProductGroupValue', function ($q) use ($productGroupId, $productFamilyId) {
+                $q->on('Filter_Filter.productGroupID', '=', 'Common_ProductGroupValue.productGroupID');
+                $q->where('Common_ProductGroupValue.productFamilyID', '=', $productFamilyId);
+                $q->whereIn('Common_ProductGroupValue.productLineGroupID', [$productGroupId, null]);
+                $q->whereIn('Common_ProductGroupValue.productLineID', [$productGroupId, null]);
+            })
+                ->where('resultDisplaySequence', '!=', -1)
+                ->orderBy('filterDisplaySequence')
+                ->get(), new FilterTransformer());
+        } else {
+            return $this->collection(Filter::where('resultDisplaySequence', '!=', -1)->orderBy('filterDisplaySequence')->get(), new FilterTransformer());
+        }
 
-
-        return $this->collection(Filter::join('Common_ProductGroupValue', function ($q) use ($productGroupId, $productFamilyId) {
-            $q->on('Filter_Filter.productGroupID', '=', 'Common_ProductGroupValue.productGroupID');
-            $q->where('Common_ProductGroupValue.productFamilyID', '=', $productFamilyId);
-            $q->whereIn('Common_ProductGroupValue.productLineGroupID', [$productGroupId, null]);
-            $q->whereIn('Common_ProductGroupValue.productLineID', [$productGroupId, null]);
-        })
-            ->where('resultDisplaySequence', '!=', -1)
-            ->orderBy('filterDisplaySequence')
-            ->get(), new FilterTransformer());
     }
 
     /**
@@ -60,7 +60,49 @@ class FilterController extends BaseController
      */
     public function store(FilterRequest $request)
     {
-        return Filter::create($request);
+
+        DB::beginTransaction(); //Start transaction!
+
+        try {
+            $input = $request->json()->all();
+            $filters = Filter::where('productGroupID', '=', $input['productGroup']['id'])->where('resultDisplaySequence', '!=', -1)->get();
+            $filter = new Filter;
+
+            $rTranslation = new CommonTranslateWordId;
+            $rTranslation->description = $input['name'];
+            $rTranslation->save();
+
+            //Create new translation
+            $translation = new CommonTranslateWord;
+            $translation->langID = 1;
+            $translation->word = $input['name'];
+            $translation->translation()->associate($rTranslation);
+            $translation->save();
+
+
+            //Search filter group and type with given ID
+            $group = FilterGroup::findOrFail($input['group']['id']);
+            $type = FilterType::findOrFail($input['type']['id']);
+            $productGroup = ProductGroup::findOrFail($input['productGroup']['id']);
+
+            //Update relations
+            $filter->group()->associate($group);
+            $filter->type()->associate($type);
+            $filter->productGroup()->associate($productGroup);
+            $filter->translation()->associate($rTranslation);
+
+            $filter->filterDisplaySequence = $filters->sortByDesc('filterDisplaySequence')->first()->filterDisplaySequence + 1;
+            $filter->resultDisplaySequence = $filters->sortByDesc('resultDisplaySequence')->first()->resultDisplaySequence + 1;
+            $filter->shortName = $input['shortName'];
+
+            if ($filter->save()) {
+                DB::commit();
+                return $this->item($filter, new FilterTransformer());
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
     }
 
     /**
@@ -84,7 +126,7 @@ class FilterController extends BaseController
 
         DB::beginTransaction(); //Start transaction!
 
-        try{
+        try {
             $input = $request->json()->all();
 
             //Search filter with given ID and include translation relation
@@ -93,22 +135,24 @@ class FilterController extends BaseController
             //Search filter group and type with given ID
             $group = FilterGroup::findOrFail($input['group']['id']);
             $type = FilterType::findOrFail($input['type']['id']);
+            $productGroup = ProductGroup::findOrFail($input['productGroup']['id']);
 
             //Update translation
             $filter->translation->en->first()->word = $input['name'];
+            $filter->shortName = $input['shortName'];
             $filter->filterDisplaySequence = $input['sequence'];
 
             //Update relations
             $filter->group()->associate($group);
             $filter->type()->associate($type);
+            $filter->productGroup()->associate($productGroup);
 
             //Save filter and relations
-            $filter->push();
-            DB::commit();
-            return $this->item($filter, new FilterTransformer());
-        }
-        catch(\Exception $e)
-        {
+            if($filter->push()) {
+                DB::commit();
+                return $this->item($filter, new FilterTransformer());
+            }
+        } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }
@@ -123,19 +167,17 @@ class FilterController extends BaseController
      */
     public function updateAll(Request $request)
     {
-        try{
+        try {
             $input = $request->json()->all();
             $response = array();
 
-            foreach($input as $item) {
-                if(isset($item['id'])) {
+            foreach ($input as $item) {
+                if (isset($item['id'])) {
                     $response[] = $this->dispatcher->json($item)->put('filters/' . $item['id']);
                 }
             }
             return $this->collection(collect($response), new FilterTransformer());
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             throw $e;
         }
     }

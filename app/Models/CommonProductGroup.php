@@ -7,6 +7,7 @@ class CommonProductGroup extends Model {
     /**
      * Generated
      */
+    protected $primaryKey = 'productGroupID';
 
     protected $table = 'Common_ProductGroup';
     protected $fillable = ['productGroupID', 'description'];

@@ -8,7 +8,7 @@ class FilterTransformer extends TransformerAbstract
 {
 
     protected $defaultIncludes = [
-        'group', 'type', 'propertyGroupFilter'
+        'group', 'type', 'productGroup','propertyGroupFilter'
     ];
     
     public function transform(Filter $filter)
@@ -16,6 +16,7 @@ class FilterTransformer extends TransformerAbstract
         return [
             'id' => (int) $filter->filterID,
             'name' => $filter->translation->en->first()->word,
+            'shortName' => $filter->shortName,
             'sequence' => (int) $filter->filterDisplaySequence,
             'spaceLeft' => (int) $filter->filterSpaceLeftInPixel,
             'spaceRight' => (int) $filter->filterSpaceRightInPixel
@@ -35,6 +36,14 @@ class FilterTransformer extends TransformerAbstract
         $filterType = $filter->type;
         if ($filterType) {
             return $this->item($filterType, new FilterTypeTransformer(), null);
+        }
+    }
+
+    public function includeProductGroup(Filter $filter)
+    {
+        $productGroup = $filter->productGroup;
+        if ($productGroup) {
+            return $this->item($productGroup, new ProductGroupTransformer(), null);
         }
     }
 

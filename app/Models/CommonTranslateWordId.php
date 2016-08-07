@@ -7,7 +7,7 @@ class CommonTranslateWordId extends Model {
     /**
      * Generated
      */
-
+    protected $primaryKey = 'wordID';
     protected $table = 'Common_TranslateWordId';
     protected $fillable = ['wordID', 'description'];
 
@@ -49,12 +49,12 @@ class CommonTranslateWordId extends Model {
         return $this->hasMany(\App\Models\CommonProductLineGroup::class, 'displayName', 'wordID');
     }
 
-    public function languages() {
+    public function translations() {
         return $this->hasMany(\App\Models\CommonTranslateWord::class, 'wordID', 'wordID');
     }
 
     public function en() {
-        return $this->languages()->where('langID', 1);
+        return $this->translations()->where('langID', 1);
     }
 
     public function filterFilters() {

@@ -12,9 +12,10 @@ class FilterRequest extends JsonRequest
     {
         return [
             'name' => 'required',
-            'sequence' => 'required',
+            'shortName' => 'required',
             'group' => 'required',
             'type' => 'required',
+            'productGroup' => 'required'
         ];
     }
 }

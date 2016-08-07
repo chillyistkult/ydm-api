@@ -19,8 +19,10 @@ $api->version('v1', function ($api) {
 		$api->get('technologies/{id}', 'ProductFamilyController@show');
 		$api->get('technologies/{id}/productlines', 'ProductLineController@index')->where(['switch' => '^(lines|groups)$']);
 		$api->get('technologies/{pfId}/productlines/{plId}', 'ProductLineController@show');
-		$api->get('technologies/{pfId}/productlines/{pgId}/filters', 'FilterController@getByTechnologyAndProduct');
+		$api->get('technologies/{pfId}/productlines/{pgId}/filters', 'FilterController@index');
+        $api->get('productgroups', 'ProductGroupController@index');
 		$api->get('filters', 'FilterController@index');
+        $api->post('filters', 'FilterController@store');
         $api->put('filters', 'FilterController@updateAll');
 		$api->get('filters/{id}', 'FilterController@show')->where('id', '[0-9]+');
 		$api->put('filters/{id}', 'FilterController@update')->where('id', '[0-9]+');
