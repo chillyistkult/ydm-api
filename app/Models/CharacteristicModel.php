@@ -9,9 +9,8 @@ class CharacteristicModel extends Model {
      */
 
     protected $primaryKey = 'characteristicModelID';
-
     protected $table = 'Characteristic_Model';
-    protected $fillable = ['code', 'description', 'productLineID', 'basePrice', 'priceInUSD', 'priceInJPY', 'validFrom', 'validTo', 'informationText', 'featureModelPrefix'];
+    protected $fillable = ['characteristicModelID', 'code', 'description', 'productLineID', 'basePrice', 'priceInUSD', 'priceInJPY', 'validFrom', 'validTo', 'informationText', 'featureModelPrefix'];
 
 
     public function translation() {

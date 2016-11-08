@@ -9,7 +9,6 @@ class CommonProductFamily extends Model {
      */
 
     protected $primaryKey = 'productFamilyID';
-
     protected $table = 'Common_ProductFamily';
     protected $fillable = ['productFamilyID', 'shortName', 'displayName', 'displaySequence'];
 
