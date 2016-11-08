@@ -7,6 +7,7 @@ use App\Models\FilterFilter as Filter;
 use App\Models\FilterFilterGroup as FilterGroup;
 use App\Models\FilterFilterType as FilterType;
 use App\Models\CommonProductGroup as ProductGroup;
+use App\Models\CommonProductLine as ProductLine;
 use App\Http\Requests;
 use Dingo\Api\Dispatcher;
 use DB;
@@ -36,7 +37,10 @@ class FilterController extends BaseController
     {
         $productGroupId = $request->route('pgId');
         $productFamilyId = $request->route('pfId');
+
+        // What I do here is complete garbage, please ignore this piece of code...
         if ($productGroupId && $productFamilyId) {
+            $productGroupId = ProductLine::where('productLineID', $productGroupId)->value('productLineGroupID');
             return $this->collection(Filter::join('Common_ProductGroupValue', function ($q) use ($productGroupId, $productFamilyId) {
                 $q->on('Filter_Filter.productGroupID', '=', 'Common_ProductGroupValue.productGroupID');
                 $q->where('Common_ProductGroupValue.productFamilyID', '=', $productFamilyId);
