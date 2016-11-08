@@ -9,6 +9,7 @@ use App\Models\FilterFilterType as FilterType;
 use App\Models\CommonProductGroup as ProductGroup;
 use App\Models\CommonProductLine as ProductLine;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Log;
 use Dingo\Api\Dispatcher;
 use DB;
 use Illuminate\Http\Request;
@@ -41,6 +42,8 @@ class FilterController extends BaseController
         // What I do here is complete garbage, please ignore this piece of code...
         if ($productGroupId && $productFamilyId) {
             $productGroupId = ProductLine::where('productLineID', $productGroupId)->value('productLineGroupID');
+            Log::info('Product family: '.$productFamilyId);
+            Log::info('Product group: '.$productGroupId);
             return $this->collection(Filter::join('Common_ProductGroupValue', function ($q) use ($productGroupId, $productFamilyId) {
                 $q->on('Filter_Filter.productGroupID', '=', 'Common_ProductGroupValue.productGroupID');
                 $q->where('Common_ProductGroupValue.productFamilyID', '=', $productFamilyId);
