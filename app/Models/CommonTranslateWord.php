@@ -8,9 +8,8 @@ class CommonTranslateWord extends Model {
      * Generated
      */
 
-    protected $primaryKey = 'wordID';
     protected $table = 'Common_TranslateWord';
-    protected $fillable = ['langID', 'wordID', 'word'];
+    protected $fillable = ['wordID', 'langID', 'word'];
 
     public $timestamps = false;
 

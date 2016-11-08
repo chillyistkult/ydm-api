@@ -11,8 +11,7 @@ class FilterPropertyRequest extends JsonRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'sequence' => 'required'
+            'name' => 'required'
         ];
     }
 }

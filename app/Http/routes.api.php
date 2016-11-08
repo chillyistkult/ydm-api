@@ -28,6 +28,7 @@ $api->version('v1', function ($api) {
 		$api->put('filters/{id}', 'FilterController@update')->where('id', '[0-9]+');
         $api->delete('filters/{id}', 'FilterController@destroy')->where('id', '[0-9]+');
 		$api->get('filters/{fId}/properties/{pId}/models', 'ModelController@getByFilterAndProperty');
+        $api->post('filters/{fId}/properties', 'FilterPropertyController@store');
 		$api->get('filters/types', 'FilterTypeController@index');
 		$api->get('filters/types/{id}', 'FilterTypeController@show')->where('id', '[0-9]+');
 		$api->get('filters/groups', 'FilterGroupController@index');
