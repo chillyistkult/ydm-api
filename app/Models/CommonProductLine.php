@@ -8,6 +8,7 @@ class CommonProductLine extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'productLineID';
     protected $table = 'Common_ProductLine';
     protected $fillable = ['productLineID', 'productFamilyID', 'shortName', 'displayName', 'selectionResultPrefix', 'productLineGroupID', 'displaySequence'];
 

@@ -10,7 +10,7 @@ class CommonTranslateWord extends Model {
 
     protected $primaryKey = 'wordID';
     protected $table = 'Common_TranslateWord';
-    protected $fillable = ['word'];
+    protected $fillable = ['langID', 'wordID', 'word'];
 
     public $timestamps = false;
 

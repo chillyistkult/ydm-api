@@ -10,7 +10,7 @@ class FilterFilterType extends Model {
 
     protected $primaryKey = 'filterTypeID';
     protected $table = 'Filter_FilterType';
-    protected $fillable = ['shortName', 'description'];
+    protected $fillable = ['filterTypeID', 'shortName', 'description'];
 
 
     public function filterFilters() {

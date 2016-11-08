@@ -8,6 +8,7 @@ class FilterCustomCharacteristicFilter extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'filterID';
     protected $table = 'Filter_CustomCharacteristicFilter';
     protected $fillable = ['filterID', 'customCharacteristicID', 'description'];
 

@@ -10,7 +10,7 @@ class FilterFilter extends Model {
 
     protected $primaryKey = 'filterID';
     protected $table = 'Filter_Filter';
-    protected $fillable = ['shortName', 'displayName', 'filterTypeID', 'productGroupID', 'filterGroupID', 'resultDisplaySequence', 'filterDisplaySequence', 'filterSpaceLeftInPixel', 'filterSpaceRightInPixel', 'preselectedValueID'];
+    protected $fillable = ['filterID', 'shortName', 'displayName', 'filterTypeID', 'productGroupID', 'filterGroupID', 'resultDisplaySequence', 'filterDisplaySequence', 'filterSpaceLeftInPixel', 'filterSpaceRightInPixel', 'preselectedValueID'];
 
     public $timestamps = false;
 

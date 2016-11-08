@@ -10,7 +10,7 @@ class FilterFilterGroup extends Model {
 
     protected $primaryKey = 'filterGroupID';
     protected $table = 'Filter_FilterGroup';
-    protected $fillable = ['shortName', 'displayName', 'infoTooltip', 'helpTooltip', 'initiallyCollapsed', 'displaySequence'];
+    protected $fillable = ['filterGroupID', 'shortName', 'displayName', 'infoTooltip', 'helpTooltip', 'initiallyCollapsed', 'displaySequence'];
 
 
     public function translation() {

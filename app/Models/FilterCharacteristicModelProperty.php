@@ -8,6 +8,7 @@ class FilterCharacteristicModelProperty extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'propertyID';
     protected $table = 'Filter_CharacteristicModelProperties';
     protected $fillable = ['propertyID', 'characteristicModelID'];
 

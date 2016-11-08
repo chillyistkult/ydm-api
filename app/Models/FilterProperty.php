@@ -10,7 +10,7 @@ class FilterProperty extends Model {
 
     protected $primaryKey = 'propertyID';
     protected $table = 'Filter_Property';
-    protected $fillable = ['shortName', 'displayName', 'propertyGroupID', 'minTemperatureInCelsius', 'maxTemperatureInCelsius', 'maxPressureInBarAbsolute', 'aggregateStateID', 'displaySequence'];
+    protected $fillable = ['propertyID', 'shortName', 'displayName', 'propertyGroupID', 'minTemperatureInCelsius', 'maxTemperatureInCelsius', 'maxPressureInBarAbsolute', 'aggregateStateID', 'displaySequence'];
 
     public $timestamps = false;
 

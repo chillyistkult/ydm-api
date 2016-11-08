@@ -8,6 +8,7 @@ class FilterModelComponentFilter extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'filterID';
     protected $table = 'Filter_ModelComponentFilter';
     protected $fillable = ['filterID', 'modelComponentTypeID', 'description'];
 

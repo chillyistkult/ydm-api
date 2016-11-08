@@ -8,6 +8,7 @@ class FilterPropertyGroup extends Model {
      * Generated
      */
 
+    protected $primaryKey = 'propertyGroupID';
     protected $table = 'Filter_PropertyGroup';
     protected $fillable = ['propertyGroupID', 'shortName', 'displaySequence'];
 
