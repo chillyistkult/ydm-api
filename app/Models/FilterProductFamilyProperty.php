@@ -11,6 +11,7 @@ class FilterProductFamilyProperty extends Model {
     protected $table = 'Filter_ProductFamilyProperties';
     protected $fillable = ['productFamilyID', 'productPropertyID'];
 
+    public $timestamps = false;
 
     public function productFamily() {
         return $this->belongsTo(\App\Models\CommonProductFamily::class, 'productFamilyID', 'productFamilyID');

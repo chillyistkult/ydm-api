@@ -11,6 +11,7 @@ class FilterPropertyGroupFilter extends Model {
     protected $table = 'Filter_PropertyGroupFilter';
     protected $fillable = ['filterID', 'propertyGroupID', 'description'];
 
+    public $timestamps = false;
 
     public function filter() {
         return $this->belongsTo(\App\Models\FilterFilter::class, 'filterID', 'filterID');

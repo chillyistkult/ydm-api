@@ -11,6 +11,7 @@ class FilterProductLineProperty extends Model {
     protected $table = 'Filter_ProductLineProperties';
     protected $fillable = ['productLineID', 'productPropertyID'];
 
+    public $timestamps = false;
 
     public function productLine() {
         return $this->belongsTo(\App\Models\CommonProductLine::class, 'productLineID', 'productLineID');

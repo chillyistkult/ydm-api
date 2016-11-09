@@ -6,6 +6,8 @@ use App\Models\CommonTranslateWordId;
 use App\Models\FilterFilter as Filter;
 use App\Models\FilterFilterGroup as FilterGroup;
 use App\Models\FilterFilterType as FilterType;
+use App\Models\FilterPropertyGroup as PropertyGroup;
+use App\Models\FilterPropertyGroupFilter as PropertyGroupFilter;
 use App\Models\CommonProductGroup as ProductGroup;
 use App\Models\CommonProductLine as ProductLine;
 use App\Http\Requests;
@@ -42,8 +44,8 @@ class FilterController extends BaseController
         // What I do here is complete garbage, please ignore this piece of code...
         if ($productGroupId && $productFamilyId) {
             $productGroupId = ProductLine::where('productLineID', $productGroupId)->value('productLineGroupID');
-            Log::info('Product family: '.$productFamilyId);
-            Log::info('Product group: '.$productGroupId);
+            Log::info('Product family: ' . $productFamilyId);
+            Log::info('Product group: ' . $productGroupId);
             return $this->collection(Filter::join('Common_ProductGroupValue', function ($q) use ($productGroupId, $productFamilyId) {
                 $q->on('Filter_Filter.productGroupID', '=', 'Common_ProductGroupValue.productGroupID');
                 $q->where('Common_ProductGroupValue.productFamilyID', '=', $productFamilyId);
@@ -75,6 +77,10 @@ class FilterController extends BaseController
             $filters = Filter::where('productGroupID', '=', $input['productGroup']['id'])->where('resultDisplaySequence', '!=', -1)->get();
             $filter = new Filter;
 
+            $propertyGroup = new PropertyGroup;
+            $propertyGroup->shortName = $input['name'];
+            $propertyGroup->displaySequence = 100;
+
             $rTranslation = new CommonTranslateWordId;
             $rTranslation->description = $input['name'];
             $rTranslation->save();
@@ -102,9 +108,15 @@ class FilterController extends BaseController
             $filter->resultDisplaySequence = $filters->sortByDesc('resultDisplaySequence')->first()->resultDisplaySequence + 1;
             $filter->shortName = $input['shortName'];
 
-            if ($filter->save()) {
-                DB::commit();
-                return $this->item($filter, new FilterTransformer());
+            if ($filter->save() && $propertyGroup->save()) {
+                $filterPropertyGroup = new PropertyGroupFilter;
+                $filterPropertyGroup->filterID = $filter->filterID;
+                $filterPropertyGroup->propertyGroupID = $propertyGroup->propertyGroupID;
+                $filterPropertyGroup->description = $filter->shortName;
+                if ($filterPropertyGroup->save()) {
+                    DB::commit();
+                    return $this->item($filter, new FilterTransformer());
+                }
             }
         } catch (\Exception $e) {
             DB::rollback();
@@ -148,6 +160,8 @@ class FilterController extends BaseController
             $filter->translation->en->first()->word = $input['name'];
             $filter->shortName = $input['shortName'];
             $filter->filterDisplaySequence = $input['sequence'];
+            $filter->filterSpaceLeftInPixel = $input['spaceLeft'];
+            $filter->filterSpaceRightInPixel = $input['spaceRight'];
 
             //Update relations
             $filter->group()->associate($group);
@@ -177,10 +191,17 @@ class FilterController extends BaseController
         try {
             $input = $request->json()->all();
             $response = array();
-
-            foreach ($input as $item) {
-                if (isset($item['id'])) {
-                    $response[] = $this->dispatcher->json($item)->put('filters/' . $item['id']);
+            for ($i = 0, $j = 0, $k = 0; $i <= count($input); $i++) {
+                if (isset($input[$i]['id'])) {
+                    if ($input[$i]['group']['id'] == 1) {
+                        $input[$i]['sequence'] = $j;
+                        $j++;
+                    }
+                    if ($input[$i]['group']['id'] == 2) {
+                        $input[$i]['sequence'] = $k;
+                        $k++;
+                    }
+                    $response[] = $this->dispatcher->json($input[$i])->put('filters/' . $input[$i]['id']);
                 }
             }
             return $this->collection(collect($response), new FilterTransformer());

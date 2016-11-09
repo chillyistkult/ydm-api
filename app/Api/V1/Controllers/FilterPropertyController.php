@@ -69,11 +69,21 @@ class FilterPropertyController extends BaseController
 
             //Update meta informations
             $filterProperty->shortName = $input['name'];
-            $filterProperty->minTemperatureInCelsius = $input['minTemp'];
-            $filterProperty->maxTemperatureInCelsius = $input['maxTemp'];
-            $filterProperty->maxPressureInBarAbsolute = $input['maxPressure'];
+            if (isset($input['minTemp'])) {
+                $filterProperty->minTemperatureInCelsius = $input['minTemp'];
+            }
+            if (isset($input['maxTemp'])) {
+                $filterProperty->maxTemperatureInCelsius = $input['maxTemp'];
+            }
+            if (isset($input['maxPressure'])) {
+                $filterProperty->maxPressureInBarAbsolute = $input['maxPressure'];
+            }
 
-            $filterProperty->displaySequence = $filterProperties->sortByDesc('displaySequence')->first()->displaySequence + 1;
+            if (!$filterProperties->isEmpty()) {
+                $filterProperty->displaySequence = $filterProperties->sortByDesc('displaySequence')->first()->displaySequence + 1;
+            } else {
+                $filterProperty->displaySequence = 0;
+            }
 
             if ($filterProperty->save()) {
                 DB::commit();
@@ -106,7 +116,7 @@ class FilterPropertyController extends BaseController
 
         DB::beginTransaction(); //Start transaction!
 
-        try{
+        try {
             $input = $request->json()->all();
 
             //Search filter with given ID and include translation relation
@@ -116,17 +126,22 @@ class FilterPropertyController extends BaseController
             $filterProperty->translation->en->first()->word = $input['name'];
 
             //Update meta informations
-            $filterProperty->minTemperatureInCelsius = $input['minTemp'];
-            $filterProperty->maxTemperatureInCelsius = $input['maxTemp'];
-            $filterProperty->maxPressureInBarAbsolute = $input['maxPressure'];
+            if (isset($input['minTemp'])) {
+                $filterProperty->minTemperatureInCelsius = $input['minTemp'];
+            }
+            if (isset($input['maxTemp'])) {
+                $filterProperty->maxTemperatureInCelsius = $input['maxTemp'];
+            }
+            if (isset($input['maxPressure'])) {
+                $filterProperty->maxPressureInBarAbsolute = $input['maxPressure'];
+            }
 
             //Save filter and relations
-            $filterProperty->push();
-            DB::commit();
-            return $this->item($filterProperty, new FilterPropertyTransformer());
-        }
-        catch(\Exception $e)
-        {
+            if ($filterProperty->push()) {
+                DB::commit();
+                return $this->item($filterProperty, new FilterPropertyTransformer());
+            }
+        } catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }

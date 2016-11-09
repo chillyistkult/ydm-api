@@ -7,7 +7,7 @@ class CommonTranslateWord extends Model {
     /**
      * Generated
      */
-
+    protected $primaryKey = 'wordID';
     protected $table = 'Common_TranslateWord';
     protected $fillable = ['wordID', 'langID', 'word'];
 

@@ -12,6 +12,7 @@ class FilterPropertyGroup extends Model {
     protected $table = 'Filter_PropertyGroup';
     protected $fillable = ['propertyGroupID', 'shortName', 'displaySequence'];
 
+    public $timestamps = false;
 
     public function filters() {
         return $this->belongsToMany(\App\Models\FilterFilter::class, 'Filter_PropertyGroupFilter', 'propertyGroupID', 'filterID');

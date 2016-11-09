@@ -27,7 +27,6 @@ $api->version('v1', function ($api) {
 		$api->get('filters/{id}', 'FilterController@show')->where('id', '[0-9]+');
 		$api->put('filters/{id}', 'FilterController@update')->where('id', '[0-9]+');
         $api->delete('filters/{id}', 'FilterController@destroy')->where('id', '[0-9]+');
-		$api->get('filters/{fId}/properties/{pId}/models', 'ModelController@getByFilterAndProperty');
         $api->post('filters/{fId}/properties', 'FilterPropertyController@store');
 		$api->get('filters/types', 'FilterTypeController@index');
 		$api->get('filters/types/{id}', 'FilterTypeController@show')->where('id', '[0-9]+');
@@ -37,6 +36,8 @@ $api->version('v1', function ($api) {
 		$api->get('filters/properties/{id}', 'FilterPropertyController@show')->where('id', '[0-9]+');
 		$api->put('filters/properties/{id}', 'FilterPropertyController@update')->where('id', '[0-9]+');
 		$api->get('filters/properties/{pId}/models/{mId}', 'FilterPropertyController@show');
+        $api->put('filters/properties/{pId}/models/{mId}', 'ModelController@update');
+        $api->get('filters/{fId}/properties/{pId}/models', 'ModelController@getByFilterAndProperty');
 		$api->get('models', 'ModelController@index');
 		$api->get('models/{id}', 'ModelController@show');
 
